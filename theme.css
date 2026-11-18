@@ -234,37 +234,27 @@ body {
 
 	/* ── Callouts ─────────────────────────────────────────────── */
 
-	/* Each callout color is an RGB triplet used by Obsidian's callout renderer.
+	/* Obsidian 1.x: --callout-* type variables accept any valid CSS color (hex/rgb).
 	   Mapping: info/note/todo → teal, tip/success → lime,
 	            warning/caution/question → orange, danger/error/bug/fail → red */
-	--callout-default:   46, 196, 182;   /* teal */
-	--callout-info:      46, 196, 182;   /* teal */
-	--callout-todo:      46, 196, 182;   /* teal */
-	--callout-note:      46, 196, 182;   /* teal */
-	--callout-tip:       168, 216, 45;   /* lime */
-	--callout-hint:      168, 216, 45;   /* lime */
-	--callout-important: 255, 159, 28;   /* orange */
-	--callout-success:   168, 216, 45;   /* lime */
-	--callout-check:     168, 216, 45;   /* lime */
-	--callout-done:      168, 216, 45;   /* lime */
-	--callout-question:  255, 159, 28;   /* orange */
-	--callout-help:      255, 159, 28;   /* orange */
-	--callout-faq:       255, 159, 28;   /* orange */
-	--callout-warning:   255, 159, 28;   /* orange */
-	--callout-caution:   255, 159, 28;   /* orange */
-	--callout-attention: 255, 159, 28;   /* orange */
-	--callout-failure:   239, 35, 60;    /* red */
-	--callout-fail:      239, 35, 60;    /* red */
-	--callout-missing:   239, 35, 60;    /* red */
-	--callout-danger:    239, 35, 60;    /* red */
-	--callout-error:     239, 35, 60;    /* red */
-	--callout-bug:       239, 35, 60;    /* red */
-	--callout-example:   69, 217, 204;   /* lighter teal */
-	--callout-abstract:  168, 216, 45;   /* lime */
-	--callout-summary:   168, 216, 45;   /* lime */
-	--callout-tldr:      168, 216, 45;   /* lime */
-	--callout-quote:     154, 158, 168;  /* neutral gray */
-	--callout-cite:      154, 158, 168;  /* neutral gray */
+	--callout-default:   #2ec4b6;  /* teal */
+	--callout-info:      #2ec4b6;  /* teal */
+	--callout-todo:      #2ec4b6;  /* teal */
+	--callout-tip:       #a8d82d;  /* lime */
+	--callout-hint:      #a8d82d;  /* lime */
+	--callout-important: #ff9f1c;  /* orange */
+	--callout-success:   #a8d82d;  /* lime */
+	--callout-question:  #ff9f1c;  /* orange */
+	--callout-warning:   #ff9f1c;  /* orange */
+	--callout-failure:   #ef233c;  /* red */
+	--callout-fail:      #ef233c;  /* red */
+	--callout-missing:   #ef233c;  /* red */
+	--callout-danger:    #ef233c;  /* red */
+	--callout-error:     #ef233c;  /* red */
+	--callout-bug:       #ef233c;  /* red */
+	--callout-example:   #45d9cc;  /* lighter teal */
+	--callout-summary:   #a8d82d;  /* lime */
+	--callout-quote:     #9a9ea8;  /* neutral gray */
 
 	/* ── Search ───────────────────────────────────────────────── */
 	--search-match-highlight-bg:    rgb(168 216 45 / 30%);
@@ -438,34 +428,24 @@ body {
 	--code-value:       #5e8a0f;  /* darker lime */
 
 	/* ── Callouts ─────────────────────────────────────────────── */
-	--callout-default:   26, 158, 150;   /* teal */
-	--callout-info:      26, 158, 150;   /* teal */
-	--callout-todo:      26, 158, 150;   /* teal */
-	--callout-note:      26, 158, 150;   /* teal */
-	--callout-tip:       122, 171, 28;   /* lime */
-	--callout-hint:      122, 171, 28;   /* lime */
-	--callout-important: 196, 96, 0;     /* orange */
-	--callout-success:   122, 171, 28;   /* lime */
-	--callout-check:     122, 171, 28;   /* lime */
-	--callout-done:      122, 171, 28;   /* lime */
-	--callout-question:  196, 96, 0;     /* orange */
-	--callout-help:      196, 96, 0;     /* orange */
-	--callout-faq:       196, 96, 0;     /* orange */
-	--callout-warning:   196, 96, 0;     /* orange */
-	--callout-caution:   196, 96, 0;     /* orange */
-	--callout-attention: 196, 96, 0;     /* orange */
-	--callout-failure:   196, 26, 42;    /* red */
-	--callout-fail:      196, 26, 42;    /* red */
-	--callout-missing:   196, 26, 42;    /* red */
-	--callout-danger:    196, 26, 42;    /* red */
-	--callout-error:     196, 26, 42;    /* red */
-	--callout-bug:       196, 26, 42;    /* red */
-	--callout-example:   20, 138, 130;   /* darker teal */
-	--callout-abstract:  122, 171, 28;   /* lime */
-	--callout-summary:   122, 171, 28;   /* lime */
-	--callout-tldr:      122, 171, 28;   /* lime */
-	--callout-quote:     135, 133, 128;  /* neutral gray */
-	--callout-cite:      135, 133, 128;  /* neutral gray */
+	--callout-default:   #1a9e96;  /* teal */
+	--callout-info:      #1a9e96;  /* teal */
+	--callout-todo:      #1a9e96;  /* teal */
+	--callout-tip:       #7aab1c;  /* lime */
+	--callout-hint:      #7aab1c;  /* lime */
+	--callout-important: #c46000;  /* orange */
+	--callout-success:   #7aab1c;  /* lime */
+	--callout-question:  #c46000;  /* orange */
+	--callout-warning:   #c46000;  /* orange */
+	--callout-failure:   #c41a2a;  /* red */
+	--callout-fail:      #c41a2a;  /* red */
+	--callout-missing:   #c41a2a;  /* red */
+	--callout-danger:    #c41a2a;  /* red */
+	--callout-error:     #c41a2a;  /* red */
+	--callout-bug:       #c41a2a;  /* red */
+	--callout-example:   #148a82;  /* darker teal */
+	--callout-summary:   #7aab1c;  /* lime */
+	--callout-quote:     #878580;  /* neutral gray */
 
 	/* ── Search ───────────────────────────────────────────────── */
 	--search-match-highlight-bg:    rgb(168 216 45 / 45%);
@@ -494,23 +474,22 @@ body {
 
 /* ============================================================
    CALLOUT COLORS — explicit [data-callout] overrides
-   Obsidian's callout renderer reads --callout-color as a
-   comma-separated RGB triplet used in rgba(var(--callout-color), opacity).
-   Setting the variable on the .callout scope via global --callout-*
-   variables is not sufficient; each type needs an explicit selector.
+   Obsidian 1.x: --callout-color accepts any valid CSS color (hex/rgb).
+   These selectors ensure the correct tritanopia-safe color is applied
+   regardless of which --callout-* chain Obsidian uses internally.
 
    Mapping:
-     Teal   46, 196, 182  — info, note, todo, default
-     Lime   168, 216, 45  — tip, hint, success, check, done, abstract, summary, tldr
-     Orange 255, 159, 28  — warning, caution, attention, question, help, faq, important
-     Red    239, 35, 60   — danger, error, bug, failure, fail, missing
+     Teal   #2ec4b6  — info, note, todo, default
+     Lime   #a8d82d  — tip, hint, success, check, done, abstract, summary, tldr
+     Orange #ff9f1c  — warning, caution, attention, question, help, faq, important
+     Red    #ef233c  — danger, error, bug, failure, fail, missing
    ============================================================ */
 
 /* Teal — info / neutral */
 .callout[data-callout="note"],
 .callout[data-callout="info"],
 .callout[data-callout="todo"] {
-	--callout-color: 46, 196, 182;
+	--callout-color: #2ec4b6;
 }
 
 /* Lime — positive */
@@ -523,7 +502,7 @@ body {
 .callout[data-callout="abstract"],
 .callout[data-callout="summary"],
 .callout[data-callout="tldr"] {
-	--callout-color: 168, 216, 45;
+	--callout-color: #a8d82d;
 }
 
 /* Orange — caution */
@@ -533,7 +512,7 @@ body {
 .callout[data-callout="question"],
 .callout[data-callout="help"],
 .callout[data-callout="faq"] {
-	--callout-color: 255, 159, 28;
+	--callout-color: #ff9f1c;
 }
 
 /* Red — danger */
@@ -543,5 +522,5 @@ body {
 .callout[data-callout="failure"],
 .callout[data-callout="fail"],
 .callout[data-callout="missing"] {
-	--callout-color: 239, 35, 60;
+	--callout-color: #ef233c;
 }
