@@ -491,3 +491,57 @@ body {
 	--checkbox-border-color: #c5c3bf;
 	--checkbox-marker-color: #f8f7f5;
 }
+
+/* ============================================================
+   CALLOUT COLORS — explicit [data-callout] overrides
+   Obsidian's callout renderer reads --callout-color as a
+   comma-separated RGB triplet used in rgba(var(--callout-color), opacity).
+   Setting the variable on the .callout scope via global --callout-*
+   variables is not sufficient; each type needs an explicit selector.
+
+   Mapping:
+     Teal   46, 196, 182  — info, note, todo, default
+     Lime   168, 216, 45  — tip, hint, success, check, done, abstract, summary, tldr
+     Orange 255, 159, 28  — warning, caution, attention, question, help, faq, important
+     Red    239, 35, 60   — danger, error, bug, failure, fail, missing
+   ============================================================ */
+
+/* Teal — info / neutral */
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"] {
+	--callout-color: 46, 196, 182;
+}
+
+/* Lime — positive */
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"],
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] {
+	--callout-color: 168, 216, 45;
+}
+
+/* Orange — caution */
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"],
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+	--callout-color: 255, 159, 28;
+}
+
+/* Red — danger */
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"] {
+	--callout-color: 239, 35, 60;
+}
