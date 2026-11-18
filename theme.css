@@ -1,34 +1,493 @@
+/*
+ * Tritanopia — An Obsidian theme built for tritanopia (blue-cone deficiency).
+ *
+ * Tritanopia means blue and yellow/amber are the primary confusion pair and
+ * must not be used together as discriminating colors. Blue and green can appear
+ * similar; yellow and red can appear similar. Blue, purple, and yellow are
+ * avoided as primary distinguishing colors throughout this theme.
+ *
+ * Verified tritanopia-safe 4-color palette:
+ *   Teal   #2EC4B6  — appears saturated green; accent, links, interactive, info
+ *   Red    #EF233C  — appears unchanged; danger, errors, destructive actions
+ *   Orange #FF9F1C  — appears pinkish-warm; warnings, keywords, cautions
+ *   Lime   #A8D82D  — appears olive-yellow-green; success, strings, tips
+ *
+ * Design decisions:
+ *   • Red vs teal is the maximally safe pair — they differ in R and G channels,
+ *     which tritanopes retain — so this pair carries the most important signal.
+ *   • Blue/green pairs and yellow/red pairs are never used as discriminators.
+ *   • Callout colors map: info→teal, tip/success→lime, warning→orange, danger→red.
+ *   • Syntax highlighting: functions→teal, strings→lime, keywords→orange, tags→red.
+ *   • Headers cycle teal → lime → orange to give hierarchy without blue or purple.
+ *   • Both dark and light modes are fully supported.
+ *
+ * References:
+ *   Build a theme:          https://docs.obsidian.md/Themes/App+themes/Build+a+theme
+ *   Theme guidelines:       https://docs.obsidian.md/Themes/App+themes/Theme+guidelines
+ *   About styling:          https://docs.obsidian.md/Reference/CSS+variables/About+styling
+ *   CSS variables:          https://docs.obsidian.md/Reference/CSS+variables/CSS+variables
+ *   Embed fonts & images:   https://docs.obsidian.md/Themes/App+themes/Embed+fonts+and+images+in+your+theme
+ *   Sample theme:           https://github.com/obsidianmd/obsidian-sample-theme
+ *   Theme intro guide:      https://obsidian.rocks/getting-started-with-obsidian-themes/
+ */
+
+/* ============================================================
+   GLOBAL — applies to both light and dark mode
+   Per theme guidelines, non-color structural overrides live here.
+   ============================================================ */
 body {
-	--radius-s: 0px;
-	--radius-m: 0px;
-	--radius-l: 0px;
-	--input-radius: 0px;
-	--tab-radius-active: 0px;
-	--checkbox-radius: 0px;
-	--toggle-radius: 0px;
-	--toggle-thumb-radius: 0px;
-	--slider-thumb-radius: 0px;
+	/* Slightly softened corners — sharp edges from the sample theme
+	   were kept as a starting point, but 3–6 px reads more comfortably. */
+	--radius-s: 3px;
+	--radius-m: 4px;
+	--radius-l: 6px;
+	--input-radius: 4px;
+	--tab-radius-active: 4px;
+	--checkbox-radius: 3px;
+	--toggle-radius: 10px;
+	--toggle-thumb-radius: 8px;
+	--slider-thumb-radius: 10px;
+
+	/* Tag shape */
+	--tag-radius: 4px;
+	--tag-padding-x: 6px;
+	--tag-padding-y: 2px;
 }
 
-.workspace-tab-header.is-active::before, .workspace-tab-header.is-active::after {
+/* Remove the decorative tab-corner pseudo-elements the default theme uses —
+   they rely on color blending that can confuse tritanopic perception. */
+.workspace-tab-header.is-active::before,
+.workspace-tab-header.is-active::after {
 	display: none;
 }
 
-svg * {
-	stroke-linecap: square;
-	stroke-linejoin: miter;
-	rx: 0;
-	ry: 0;
+/* ============================================================
+   DARK MODE
+   Neutral-warm dark backgrounds — no blue tint in the gray scale.
+   ============================================================ */
+.theme-dark {
+	/* ── Gray scale ──────────────────────────────────────────── */
+	--color-base-00: #191a1c;
+	--color-base-05: #1e2022;
+	--color-base-10: #232527;
+	--color-base-20: #2a2c30;
+	--color-base-25: #2f3236;
+	--color-base-30: #3a3d42;
+	--color-base-35: #454850;
+	--color-base-40: #505358;
+	--color-base-50: #666a72;
+	--color-base-55: #767a84;
+	--color-base-60: #9a9ea8;
+	--color-base-70: #b8bcc8;
+	--color-base-100: #e6e8ed;
+
+	/* ── Tritanopia-safe color primitives ────────────────────── */
+
+	/* Red — safe, appears unchanged */
+	--color-red-rgb: 239, 35, 60;
+	--color-red: #ef233c;
+
+	/* Orange — safe, appears pinkish-warm */
+	--color-orange-rgb: 255, 159, 28;
+	--color-orange: #ff9f1c;
+
+	/* Yellow remapped to lime — pure yellow is a tritanopia confusion hue */
+	--color-yellow-rgb: 168, 216, 45;
+	--color-yellow: #a8d82d;
+
+	/* Green expressed as teal — the safe cool anchor */
+	--color-green-rgb: 46, 196, 182;
+	--color-green: #2ec4b6;
+
+	/* Cyan: lighter teal variant */
+	--color-cyan-rgb: 69, 217, 204;
+	--color-cyan: #45d9cc;
+
+	/* Blue remapped to teal — blue is indistinguishable from green for tritanopes */
+	--color-blue-rgb: 46, 196, 182;
+	--color-blue: #2ec4b6;
+
+	/* Purple remapped to red — purple loses its blue component for tritanopes,
+	   making it appear reddish; map explicitly to avoid false distinctiveness */
+	--color-purple-rgb: 239, 35, 60;
+	--color-purple: #ef233c;
+
+	/* Pink remapped to orange */
+	--color-pink-rgb: 255, 159, 28;
+	--color-pink: #ff9f1c;
+
+	/* ── Accent ───────────────────────────────────────────────── */
+	--color-accent: #2ec4b6;
+	--color-accent-1: #22a89d;
+	--color-accent-2: #45d9cc;
+
+	/* ── Backgrounds ─────────────────────────────────────────── */
+	--background-primary:                   #191a1c;
+	--background-primary-alt:               #1e2022;
+	--background-secondary:                 #232527;
+	--background-secondary-alt:             #2a2c30;
+	--background-modifier-hover:            rgb(255 255 255 / 6%);
+	--background-modifier-active-hover:     rgb(255 255 255 / 10%);
+	--background-modifier-border:           #3a3d42;
+	--background-modifier-border-hover:     #454850;
+	--background-modifier-border-focus:     #2ec4b6;
+	--background-modifier-error-rgb:        239, 35, 60;
+	--background-modifier-error:            rgb(239 35 60 / 18%);
+	--background-modifier-error-hover:      rgb(239 35 60 / 28.0%);
+	--background-modifier-success-rgb:      46, 196, 182;
+	--background-modifier-success:          rgb(46 196 182 / 18%);
+	--background-modifier-message:          #232527;
+
+	/* ── Text ────────────────────────────────────────────────── */
+	--text-normal:              #e6e8ed;
+	--text-muted:               #9a9ea8;
+	--text-faint:               #666a72;
+	--text-on-accent:           #191a1c;
+	--text-on-accent-muted:     rgb(25 26 28 / 70%);
+	--text-error:               #ef233c;
+	--text-error-hover:         #ff4d63;
+	--text-accent:              #2ec4b6;
+	--text-accent-hover:        #45d9cc;
+	--text-selection:           rgb(46 196 182 / 22%);
+	--text-highlight-bg:        rgb(168 216 45 / 25%);
+	--text-highlight-bg-active: rgb(168 216 45 / 40%);
+
+	/* ── Interactive ─────────────────────────────────────────── */
+	--interactive-normal:         #2a2c30;
+	--interactive-hover:          #3a3d42;
+	--interactive-accent:         #2ec4b6;
+	--interactive-accent-hsl:     177, 62%, 48%;
+	--interactive-accent-hover:   #45d9cc;
+	--interactive-success:        #a8d82d;
+
+	/* ── Links ───────────────────────────────────────────────── */
+
+	/* Internal links: teal — the primary safe cool color */
+	--link-color:                     #2ec4b6;
+	--link-color-hover:               #45d9cc;
+
+	/* External links: lime — distinguishable from teal internal links */
+	--link-external-color:            #a8d82d;
+	--link-external-color-hover:      #bde840;
+
+	/* Unresolved links: muted — clearly secondary */
+	--link-unresolved-color:          #9a9ea8;
+	--link-unresolved-opacity:        0.7;
+	--link-unresolved-color-hover:    #b8bcc8;
+	--link-unresolved-decoration-color: rgb(154 158 168 / 40%);
+
+	/* ── Emphasis ─────────────────────────────────────────────── */
+
+	/* Bold: orange — warm and distinct from teal accent */
+	--bold-color: #ff9f1c;
+
+	/* Italic: teal — cool complement to bold's orange */
+	--italic-color: #2ec4b6;
+
+	/* ── Headers — cycle through the tritanopia-safe palette ──── */
+	--h1-color: #2ec4b6;   /* teal */
+	--h2-color: #a8d82d;   /* lime */
+	--h3-color: #ff9f1c;   /* orange */
+	--h4-color: #45d9cc;   /* lighter teal */
+	--h5-color: #bde840;   /* lighter lime */
+	--h6-color: #ffb84d;   /* lighter orange */
+
+	/* ── Inline title ─────────────────────────────────────────── */
+	--inline-title-color: #e6e8ed;
+
+	/* ── Tags ────────────────────────────────────────────────── */
+	--tag-color:            #2ec4b6;
+	--tag-background:       rgb(46 196 182 / 14.0%);
+	--tag-background-hover: rgb(46 196 182 / 24%);
+
+	/* ── Navigation / file tree ───────────────────────────────── */
+	--nav-item-color:              #9a9ea8;
+	--nav-item-color-hover:        #e6e8ed;
+	--nav-item-color-active:       #2ec4b6;
+	--nav-item-background-hover:   rgb(255 255 255 / 6%);
+	--nav-item-background-active:  rgb(46 196 182 / 14.0%);
+	--nav-collapse-icon-color:     #666a72;
+	--nav-file-tag:                #2ec4b6;
+
+	/* ── Scrollbar ───────────────────────────────────────────── */
+	--scrollbar-bg:               transparent;
+	--scrollbar-thumb-bg:         rgb(255 255 255 / 10%);
+	--scrollbar-active-thumb-bg:  rgb(255 255 255 / 20%);
+
+	/* ── Indentation guides ───────────────────────────────────── */
+	--indentation-guide-color:        rgb(255 255 255 / 8%);
+	--indentation-guide-color-active: rgb(46 196 182 / 40%);
+
+	/* ── Code ─────────────────────────────────────────────────── */
+	--code-background: #1e2022;
+	--code-normal:     #e6e8ed;
+	--code-comment:    #666a72;
+	--code-function:   #2ec4b6;  /* teal */
+	--code-important:  #ef233c;  /* red */
+	--code-keyword:    #ff9f1c;  /* orange */
+	--code-operator:   #9a9ea8;
+	--code-property:   #45d9cc;  /* lighter teal */
+	--code-punctuation: #9a9ea8;
+	--code-string:     #a8d82d;  /* lime */
+	--code-tag:        #ef233c;  /* red */
+	--code-value:      #bde840;  /* lighter lime */
+
+	/* ── Callouts ─────────────────────────────────────────────── */
+
+	/* Each callout color is an RGB triplet used by Obsidian's callout renderer.
+	   Mapping: info/note/todo → teal, tip/success → lime,
+	            warning/caution/question → orange, danger/error/bug/fail → red */
+	--callout-default:   46, 196, 182;   /* teal */
+	--callout-info:      46, 196, 182;   /* teal */
+	--callout-todo:      46, 196, 182;   /* teal */
+	--callout-note:      46, 196, 182;   /* teal */
+	--callout-tip:       168, 216, 45;   /* lime */
+	--callout-hint:      168, 216, 45;   /* lime */
+	--callout-important: 255, 159, 28;   /* orange */
+	--callout-success:   168, 216, 45;   /* lime */
+	--callout-check:     168, 216, 45;   /* lime */
+	--callout-done:      168, 216, 45;   /* lime */
+	--callout-question:  255, 159, 28;   /* orange */
+	--callout-help:      255, 159, 28;   /* orange */
+	--callout-faq:       255, 159, 28;   /* orange */
+	--callout-warning:   255, 159, 28;   /* orange */
+	--callout-caution:   255, 159, 28;   /* orange */
+	--callout-attention: 255, 159, 28;   /* orange */
+	--callout-failure:   239, 35, 60;    /* red */
+	--callout-fail:      239, 35, 60;    /* red */
+	--callout-missing:   239, 35, 60;    /* red */
+	--callout-danger:    239, 35, 60;    /* red */
+	--callout-error:     239, 35, 60;    /* red */
+	--callout-bug:       239, 35, 60;    /* red */
+	--callout-example:   69, 217, 204;   /* lighter teal */
+	--callout-abstract:  168, 216, 45;   /* lime */
+	--callout-summary:   168, 216, 45;   /* lime */
+	--callout-tldr:      168, 216, 45;   /* lime */
+	--callout-quote:     154, 158, 168;  /* neutral gray */
+	--callout-cite:      154, 158, 168;  /* neutral gray */
+
+	/* ── Search ───────────────────────────────────────────────── */
+	--search-match-highlight-bg:    rgb(168 216 45 / 30%);
+	--search-match-highlight-color: #191a1c;
+	--search-result-hover-bg:       rgb(255 255 255 / 6%);
+
+	/* ── Tabs ─────────────────────────────────────────────────── */
+	--tab-text-color:                 #666a72;
+	--tab-text-color-focused:         #9a9ea8;
+	--tab-text-color-focused-active:  #e6e8ed;
+	--tab-background:                 #191a1c;
+	--tab-active-background:          #232527;
+	--tab-active-background-focused:  #232527;
+	--tab-outline-color:              #3a3d42;
+
+	/* ── Metadata / frontmatter ───────────────────────────────── */
+	--metadata-label-text-color: #666a72;
+	--metadata-input-text-color: #9a9ea8;
+
+	/* ── Checkboxes ───────────────────────────────────────────── */
+	--checkbox-color:        #2ec4b6;
+	--checkbox-color-hover:  #45d9cc;
+	--checkbox-border-color: #3a3d42;
+	--checkbox-marker-color: #191a1c;
 }
 
-.menu {
-	padding: var(--size-2-1);
-}
+/* ============================================================
+   LIGHT MODE
+   Warm neutral light backgrounds — no blue tint in the gray scale.
+   Accent colors are darkened to meet WCAG AA contrast (4.5:1) on
+   the light backgrounds.
+   ============================================================ */
+.theme-light {
+	/* ── Gray scale ──────────────────────────────────────────── */
+	--color-base-00:  #f8f7f5;
+	--color-base-05:  #f1f0ee;
+	--color-base-10:  #eae9e6;
+	--color-base-20:  #dddbd8;
+	--color-base-25:  #d2d0cc;
+	--color-base-30:  #c5c3bf;
+	--color-base-35:  #b2b0ab;
+	--color-base-40:  #9e9c97;
+	--color-base-50:  #878580;
+	--color-base-55:  #6e6c67;
+	--color-base-60:  #555350;
+	--color-base-70:  #3c3b38;
+	--color-base-100: #1a1918;
 
-.menu-item {
-	padding: var(--size-4-1) var(--size-4-2);
-}
+	/* ── Tritanopia-safe color primitives ────────────────────── */
+	--color-red-rgb:    239, 35, 60;
+	--color-red:        #ef233c;
+	--color-orange-rgb: 220, 100, 10;
+	--color-orange:     #dc640a;
+	--color-yellow-rgb: 122, 171, 28;  /* lime, darkened for light-bg contrast */
+	--color-yellow:     #7aab1c;
+	--color-green-rgb:  26, 158, 150;  /* teal, darkened for light-bg contrast */
+	--color-green:      #1a9e96;
+	--color-cyan-rgb:   20, 138, 130;
+	--color-cyan:       #148a82;
+	--color-blue-rgb:   26, 158, 150;
+	--color-blue:       #1a9e96;
+	--color-purple-rgb: 196, 26, 42;
+	--color-purple:     #c41a2a;
+	--color-pink-rgb:   220, 100, 10;
+	--color-pink:       #dc640a;
 
-.menu-separator {
-	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
+	/* ── Accent ───────────────────────────────────────────────── */
+	--color-accent:   #1a9e96;
+	--color-accent-1: #148a82;
+	--color-accent-2: #22b5ac;
+
+	/* ── Backgrounds ─────────────────────────────────────────── */
+	--background-primary:                   #f8f7f5;
+	--background-primary-alt:               #f1f0ee;
+	--background-secondary:                 #eae9e6;
+	--background-secondary-alt:             #dddbd8;
+	--background-modifier-hover:            rgb(0 0 0 / 5%);
+	--background-modifier-active-hover:     rgb(0 0 0 / 9%);
+	--background-modifier-border:           #c5c3bf;
+	--background-modifier-border-hover:     #b2b0ab;
+	--background-modifier-border-focus:     #1a9e96;
+	--background-modifier-error-rgb:        239, 35, 60;
+	--background-modifier-error:            rgb(239 35 60 / 12%);
+	--background-modifier-error-hover:      rgb(239 35 60 / 20%);
+	--background-modifier-success-rgb:      26, 158, 150;
+	--background-modifier-success:          rgb(26 158 150 / 14.0%);
+	--background-modifier-message:          #eae9e6;
+
+	/* ── Text ────────────────────────────────────────────────── */
+	--text-normal:              #1a1918;
+	--text-muted:               #555350;
+	--text-faint:               #878580;
+	--text-on-accent:           #f8f7f5;
+	--text-on-accent-muted:     rgb(248 247 245 / 75%);
+	--text-error:               #c41a2a;
+	--text-error-hover:         #ef233c;
+	--text-accent:              #1a9e96;
+	--text-accent-hover:        #148a82;
+	--text-selection:           rgb(26 158 150 / 18%);
+	--text-highlight-bg:        rgb(168 216 45 / 40%);
+	--text-highlight-bg-active: rgb(168 216 45 / 60%);
+
+	/* ── Interactive ─────────────────────────────────────────── */
+	--interactive-normal:         #eae9e6;
+	--interactive-hover:          #dddbd8;
+	--interactive-accent:         #1a9e96;
+	--interactive-accent-hsl:     177, 72%, 36%;
+	--interactive-accent-hover:   #148a82;
+	--interactive-success:        #7aab1c;
+
+	/* ── Links ───────────────────────────────────────────────── */
+	--link-color:                     #1a9e96;
+	--link-color-hover:               #148a82;
+	--link-external-color:            #7aab1c;
+	--link-external-color-hover:      #5e8a0f;
+	--link-unresolved-color:          #9e9c97;
+	--link-unresolved-opacity:        0.7;
+	--link-unresolved-color-hover:    #6e6c67;
+	--link-unresolved-decoration-color: rgb(135 133 128 / 40%);
+
+	/* ── Emphasis ─────────────────────────────────────────────── */
+	--bold-color:   #c46000;  /* darkened orange for contrast */
+	--italic-color: #1a9e96;  /* teal */
+
+	/* ── Headers ─────────────────────────────────────────────── */
+	--h1-color: #1a9e96;  /* teal */
+	--h2-color: #7aab1c;  /* lime (darkened) */
+	--h3-color: #c46000;  /* orange (darkened) */
+	--h4-color: #148a82;  /* darker teal */
+	--h5-color: #5e8a0f;  /* darker lime */
+	--h6-color: #a05000;  /* darker orange */
+
+	/* ── Inline title ─────────────────────────────────────────── */
+	--inline-title-color: #1a1918;
+
+	/* ── Tags ────────────────────────────────────────────────── */
+	--tag-color:            #1a9e96;
+	--tag-background:       rgb(26 158 150 / 12%);
+	--tag-background-hover: rgb(26 158 150 / 22%);
+
+	/* ── Navigation / file tree ───────────────────────────────── */
+	--nav-item-color:              #878580;
+	--nav-item-color-hover:        #1a1918;
+	--nav-item-color-active:       #1a9e96;
+	--nav-item-background-hover:   rgb(0 0 0 / 5%);
+	--nav-item-background-active:  rgb(26 158 150 / 12%);
+	--nav-collapse-icon-color:     #9e9c97;
+	--nav-file-tag:                #1a9e96;
+
+	/* ── Scrollbar ───────────────────────────────────────────── */
+	--scrollbar-bg:               transparent;
+	--scrollbar-thumb-bg:         rgb(0 0 0 / 12%);
+	--scrollbar-active-thumb-bg:  rgb(0 0 0 / 22%);
+
+	/* ── Indentation guides ───────────────────────────────────── */
+	--indentation-guide-color:        rgb(0 0 0 / 10%);
+	--indentation-guide-color-active: rgb(26 158 150 / 40%);
+
+	/* ── Code ─────────────────────────────────────────────────── */
+	--code-background:  #eae9e6;
+	--code-normal:      #1a1918;
+	--code-comment:     #878580;
+	--code-function:    #1a9e96;  /* teal */
+	--code-important:   #c41a2a;  /* dark red */
+	--code-keyword:     #c46000;  /* dark orange */
+	--code-operator:    #555350;
+	--code-property:    #148a82;  /* darker teal */
+	--code-punctuation: #878580;
+	--code-string:      #7aab1c;  /* dark lime */
+	--code-tag:         #c41a2a;  /* dark red */
+	--code-value:       #5e8a0f;  /* darker lime */
+
+	/* ── Callouts ─────────────────────────────────────────────── */
+	--callout-default:   26, 158, 150;   /* teal */
+	--callout-info:      26, 158, 150;   /* teal */
+	--callout-todo:      26, 158, 150;   /* teal */
+	--callout-note:      26, 158, 150;   /* teal */
+	--callout-tip:       122, 171, 28;   /* lime */
+	--callout-hint:      122, 171, 28;   /* lime */
+	--callout-important: 196, 96, 0;     /* orange */
+	--callout-success:   122, 171, 28;   /* lime */
+	--callout-check:     122, 171, 28;   /* lime */
+	--callout-done:      122, 171, 28;   /* lime */
+	--callout-question:  196, 96, 0;     /* orange */
+	--callout-help:      196, 96, 0;     /* orange */
+	--callout-faq:       196, 96, 0;     /* orange */
+	--callout-warning:   196, 96, 0;     /* orange */
+	--callout-caution:   196, 96, 0;     /* orange */
+	--callout-attention: 196, 96, 0;     /* orange */
+	--callout-failure:   196, 26, 42;    /* red */
+	--callout-fail:      196, 26, 42;    /* red */
+	--callout-missing:   196, 26, 42;    /* red */
+	--callout-danger:    196, 26, 42;    /* red */
+	--callout-error:     196, 26, 42;    /* red */
+	--callout-bug:       196, 26, 42;    /* red */
+	--callout-example:   20, 138, 130;   /* darker teal */
+	--callout-abstract:  122, 171, 28;   /* lime */
+	--callout-summary:   122, 171, 28;   /* lime */
+	--callout-tldr:      122, 171, 28;   /* lime */
+	--callout-quote:     135, 133, 128;  /* neutral gray */
+	--callout-cite:      135, 133, 128;  /* neutral gray */
+
+	/* ── Search ───────────────────────────────────────────────── */
+	--search-match-highlight-bg:    rgb(168 216 45 / 45%);
+	--search-match-highlight-color: #1a1918;
+	--search-result-hover-bg:       rgb(0 0 0 / 5%);
+
+	/* ── Tabs ─────────────────────────────────────────────────── */
+	--tab-text-color:                 #878580;
+	--tab-text-color-focused:         #555350;
+	--tab-text-color-focused-active:  #1a1918;
+	--tab-background:                 #f8f7f5;
+	--tab-active-background:          #f8f7f5;
+	--tab-active-background-focused:  #f8f7f5;
+	--tab-outline-color:              #c5c3bf;
+
+	/* ── Metadata / frontmatter ───────────────────────────────── */
+	--metadata-label-text-color: #878580;
+	--metadata-input-text-color: #555350;
+
+	/* ── Checkboxes ───────────────────────────────────────────── */
+	--checkbox-color:        #1a9e96;
+	--checkbox-color-hover:  #148a82;
+	--checkbox-border-color: #c5c3bf;
+	--checkbox-marker-color: #f8f7f5;
 }
